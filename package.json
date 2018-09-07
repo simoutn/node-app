@@ -1,0 +1,17 @@
+{
+  "name": "haithem-app",
+  "version": "1.0.0",
+  "description": "ceci est la premiere version",
+  "main": "Server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon Server.js"
+  },
+  "author": "Haithem Turki",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.13",
+    "nodemon": "^1.18.4"
+  }
+}
