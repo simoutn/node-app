@@ -3,21 +3,34 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
+const http = require ('http');
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/haythemdbb";
+var url = "mongodb://localhost:27017/tododb";
+ 
+var UserSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  }
+});
+var User = mongoose.model('User', UserSchema);
+ module.exports = User;
 
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("tododb");
-    dbo.createCollection("users", function(err, res)
-    {
-      if (err) throw err;
-      console.log("Collection created!");
-      db.close();
-    });
-  });
-   
+
+
 router.get('/message',  (req, res , next )=> {
     res.status(200).json ({
         message : 'get'
@@ -25,18 +38,47 @@ router.get('/message',  (req, res , next )=> {
 });
 
 router.post('/register', async(req,res) => {
-   var myobj = {
-     name : req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username,
-  }
-  dbo.collection("users").insertOne(myobj, function(err, res) {
-    if (err) throw err;
-    console.log("1 document inserted");
-    db.close();
-  });
-});
+  
+//   if (req.body.email &&
+//     req.body.username &&
+//     req.body.password &&
+//     req.body.name) {
+  
+//     var userData = {
+//       email: req.body.email,
+//       username: req.body.username,
+//       password: req.body.password,
+//       name: req.body.name,
+//     }
+  
+//     //use schema.create to insert data into the db
+//     User.create(userData, function (err, user) {
+//       if (err) {
+//         return next(err)
+//       } else {
+//         return res.redirect('/profile');
+//       }
+//     });
+//   }
+ if (req.name)
+res.send({message : "ceci est un test"})
+ });
+
+//   MongoClient.connect(url, function(req, db) {
+//   var dbo = db.db("tododb");
+//   var myobj = { name: "Company Inc", email: "haithem.turki@gmail.com",password :"123456",pseudo:"HAITHEMT" };
+//   // var myobj = req.body;
+//     dbo.collection("users").insertOne(myobj, function(req, res) {
+//       if (req) throw req;
+//       console.log("User saved");
+//       db.close();
+//     });
+//   });
+
+// });
+
+
+
 // router.post('/login', async(req,res) => {
 //   res.status(200).json ({
 //     message : 'Espace login'
