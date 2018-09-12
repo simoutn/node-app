@@ -1,8 +1,10 @@
 const express =require('express');
 const app = express();
+var router = express.Router;
 const bodyParser = require('body-parser');
 const home = require('./api/Routes/home'); // Login & register
 const todo =require('./api/Routes/todo'); // Todo
+const bodyparser = require('body-parser');
 
 //Enable bodyParser (middleware)
 app.use(bodyParser.json());
@@ -17,9 +19,13 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/home',home);
+app.use('/todo',todo);
 
-app.use('/',home);
-//app.use('/todo',todo);
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname+"/dist"));
 
-module.exports=app;
+app.use('*',(req,res)=>{
+  res.sendFile(__dirname+'/dist/index.html');
+});
+
+//module.exports=app;
