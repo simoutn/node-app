@@ -25,10 +25,25 @@ let response = {
   data: [],
   message: null
 };
-// register
-router.post('/register', (req,res) => {
+// add todo
+router.post('/add/:id', (req,res) => {
   connection(db=>{
-      db.collection('todo').insert(req.body).then(result=>{
+    db.collection('users').findOneAndUpdate
+  ({"_id":ObjectID(req.params.id)},{$push:{todo : req.body}})
+  .then(result=>{
+          response.data = result;
+          response.message= "OK";
+          res.json(response);
+      }).catch(err => {
+        sendError(err, res, 409);
+      })
+  });
+});
+router.post('/delete/:id', (req,res) => {
+  connection(db=>{
+    db.collection('users').findOneAndUpdate
+  ({"_id":ObjectID(req.params.id)},{$pull:{todo : req.body}})
+  .then(result=>{
           response.data = result;
           response.message= "OK";
           res.json(response);
