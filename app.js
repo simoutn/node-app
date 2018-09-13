@@ -22,10 +22,10 @@ app.use(function (req, res, next) {
 app.use('/home',home);
 app.use('/todo',todo);
 
-app.use(express.static(__dirname+"/dist"));
+//app.use(express.static(__dirname+"/dist"));
 
-app.use('*',(req,res)=>{
-  res.sendFile(__dirname+'/dist/index.html');
-});
+// app.use('*',(req,res)=>{
+//   res.sendFile(__dirname+'/dist/index.html');
+// });
 
-//module.exports=app;
+module.exports=app;

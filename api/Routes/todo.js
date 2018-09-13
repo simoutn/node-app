@@ -25,3 +25,16 @@ let response = {
   data: [],
   message: null
 };
+// register
+router.post('/register', (req,res) => {
+  connection(db=>{
+      db.collection('todo').insert(req.body).then(result=>{
+          response.data = result;
+          response.message= "OK";
+          res.json(response);
+      }).catch(err => {
+        sendError(err, res, 409);
+      })
+  });
+});
+module.exports=router;
